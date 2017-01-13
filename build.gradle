@@ -97,7 +97,7 @@ dependencies {
 	  compile("org.apache.camel:camel-ftp:2.18.1")
 	  compile("org.apache.camel:camel-beanio:2.18.1")
 	  compile("org.apache.camel:camel-jaxb:2.18.1")
-	  compile("javax.xml.bind:jaxb-api:2.2.12")
+	  
 	  compile("org.apache-extras.camel-extra:camel-jcifs:2.14.1"){
 	  	exclude group: 'javax.servlet', module: 'servlet-api'
 	  	//D:\gradleRepository\caches\modules-2\files-2.1\javax.servlet\servlet-api\2.4\3fc542fe8bb8164e8d3e840fe7403bc0518053c0\servlet-api-2.4.jar
@@ -112,9 +112,14 @@ dependencies {
 	  //可以在gradle目录中查找pom文件。在第一句就看到dependency，需要移除这个扩展
 	  	exclude group: 'javax.servlet', module: 'servlet-api'
 	  }
+	  compile("org.apache.camel:camel-zookeeper:2.18.1")
+	  compile("org.apache.camel:camel-http:2.18.1")
+	  compile("org.apache.camel:camel-http4:2.18.1")
+	  
+	  compile("javax.xml.bind:jaxb-api:2.2.12") 
 	   
-  	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-  	providedCompile("org.apache.tomcat:tomcat-catalina:8.0.37")	   
+	  providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	  providedCompile("org.apache.tomcat:tomcat-catalina:8.0.37")	   
   
 }
 

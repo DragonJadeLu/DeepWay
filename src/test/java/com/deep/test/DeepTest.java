@@ -19,7 +19,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.deep.config.RootConfig;
 import com.deep.model.DeepRoute;
 import com.deep.service.DeepRouteService;
-
+//QQ:646761506
+//这里提供了简单的测试
 @RunWith(SpringJUnit4ClassRunner.class)  
 //@SpringApplicationConfiguration(classes = Application.class) // 使用spring 应用环境
 @WebAppConfiguration(value = "src/main/WebRoot")
@@ -48,17 +49,24 @@ public class DeepTest{
 	public void routeTest() throws Exception {
 		DeepRoute myRoute = new DeepRoute();
 		myRoute.setRouteid("TestRoute");//id不能为空
-////		myRoute.setFrom("ftp://lwh:1234@172.20.32.26/test?stepwise=true&ignoreFileNotFoundOrPermissionError=true&delete=true&consumer.delay=10s");
-		myRoute.setCfrom("file:D:/test1/?delete=true");
-		myRoute.setCto("file:E:/temp/outbox/");
-		myRoute.setBackpath("file:E:/temp/outbox1/");//做个也是需要的
-		myRoute.setProcessRef("myProcess");
-////		myRoute.setRouteid("abcdddd");
+////		myRoute.setFrom("ftp://lwh:123@172.20.32.26/test?stepwise=true&ignoreFileNotFoundOrPermissionError=true&delete=true&consumer.delay=10s");
+//		myRoute.setCfrom("file:D:/test1/?delete=true");
+//		myRoute.setCto("file:E:/temp/outbox/");
+//		myRoute.setBackpath("file:E:/temp/outbox1/");//做个也是需要的
+//		myRoute.setProcessRef("myProcess");
+////	myRoute.setRouteid("abcdddd");
+//		myRoute.setCfrom("timer://report?fixedRate=true&delay=0&period=1000");
+//		myRoute.setCfrom("timer://report?fixedRate=true&delay=0");
+//		myRoute.setCfrom("timer://report?fixedRate=false");
+		myRoute.setCfrom("direct:start");
+		myRoute.setCto("https://www.baidu.com/");
 		logger.info("++++++++++++++++++++++++++");
 		RouteDefinition routeDefinition = new RouteDefinition();
 		routeDefinition.from(myRoute.getCfrom());
-		routeDefinition.process(myRoute.getProcessRef());
+//		routeDefinition.process(myRoute.getProcessRef());
 		routeDefinition.to(myRoute.getCto());
+		
+		routeDefinition.to("file://E:/Temp/outbox1/?fileName=${date:now:yyyy}/baidu.com.${date:now:yyyyMMddhhmmss}.html");//自动修改文件名
 		camelContext.addRouteDefinition(routeDefinition);
 		camelContext.start();//
 		logger.info("============================");
@@ -76,7 +84,7 @@ public class DeepTest{
 		myRoute.setRouteid("TestRoute");//id不能为空
 		myRoute.setCfrom("file:D:/test1/?delete=true");
 		myRoute.setCto("file:E:/temp/outbox/");
-		String backpath = "file://E:/temp/outbox1/?fileName=${date:now:yyyy}/${date:now:yyyyMMdd}/${file:name}";
+		String backpath = "file://E:/temp/outbox1/?fileName=${date:now:yyyy}/${date:now:yyyyMMdd}/${file:name}";//
 		myRoute.setBackpath(backpath);//做个也是需要的
 		
 		deepRouteService.save(myRoute);
