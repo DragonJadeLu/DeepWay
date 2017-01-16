@@ -18,7 +18,6 @@ import com.deep.process.DefaultProcess;
  *
  */
 @Configuration
-//@ComponentScan(basePackages = "com.deep.process")
 public class CamelConfig {
 	private static final Logger logger = Logger.getLogger(CamelConfig.class);
 
@@ -26,13 +25,6 @@ public class CamelConfig {
 	public CamelContext camelContext() throws Exception {
 		logger.info("CamelConfig");
 		CamelContext camelContext = new DefaultCamelContext();
-//		camelContext.setAutoStartup(false);
-//		camelContext.addRoutes(null);//先不增加
-		// Map<String, DataFormatDefinition> dataFormats = new HashMap<String,
-		// DataFormatDefinition>();
-		// camelContext.setDataFormats(dataFormats);
-		// camelContext.stop();//先停止
-		// logger.info(camelContext);
 		camelContext.getRegistry();
 		return camelContext;
 
@@ -44,11 +36,4 @@ public class CamelConfig {
 ////		jaxb2Marshaller.setClassesToBeBound(classesToBeBound);
 //		return jaxb2Marshaller;
 //	}
-	
-//	@Bean(name="defaultProcess")
-//	public Processor defaultProcess() {
-//		Processor processor = new DefaultProcess();
-//		return processor;
-//	}
-		
 }

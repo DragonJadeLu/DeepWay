@@ -3,15 +3,18 @@ package com.deep.test;
 import java.util.List;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.RoutesBuilder;
 import org.apache.camel.ServiceStatus;
-import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.http4.HttpComponent;
 import org.apache.camel.model.RouteDefinition;
+import org.apache.camel.util.jsse.KeyManagersParameters;
+import org.apache.camel.util.jsse.KeyStoreParameters;
+import org.apache.camel.util.jsse.SSLContextParameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -36,9 +39,13 @@ public class DeepTest{
 //	@Autowired
 //	private ExcelHelper excelHelper;
 	
+
+	@Autowired
+	private ApplicationContext appContext;
 	
 	@Autowired
 	private CamelContext camelContext;
+	
 //	
 //	@Test
 //	public void mongodbTest() {
@@ -55,17 +62,18 @@ public class DeepTest{
 //		myRoute.setBackpath("file:E:/temp/outbox1/");//做个也是需要的
 //		myRoute.setProcessRef("myProcess");
 ////	myRoute.setRouteid("abcdddd");
-//		myRoute.setCfrom("timer://report?fixedRate=true&delay=0&period=1000");
+		myRoute.setCfrom("timer://report?fixedRate=true&delay=0&period=1000");
 //		myRoute.setCfrom("timer://report?fixedRate=true&delay=0");
 //		myRoute.setCfrom("timer://report?fixedRate=false");
-		myRoute.setCfrom("direct:start");
-		myRoute.setCto("https://www.baidu.com/");
+//		myRoute.setCfrom("direct:start");
+//		Object sslContextParameters = appContext.getBean("sslContextParameters");
+		myRoute.setCto("https4://www.oschina.net/p/deepway?sslContextParametersRef=sslContextParameters");
 		logger.info("++++++++++++++++++++++++++");
 		RouteDefinition routeDefinition = new RouteDefinition();
 		routeDefinition.from(myRoute.getCfrom());
 //		routeDefinition.process(myRoute.getProcessRef());
+//		routeDefinition.setHeader("User-Agent:Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 		routeDefinition.to(myRoute.getCto());
-		
 		routeDefinition.to("file://E:/Temp/outbox1/?fileName=${date:now:yyyy}/baidu.com.${date:now:yyyyMMddhhmmss}.html");//自动修改文件名
 		camelContext.addRouteDefinition(routeDefinition);
 		camelContext.start();//
@@ -77,6 +85,37 @@ public class DeepTest{
 //		routeDefinition.to(myRoute.getCto());
 //		camelContext.addRoutes(routeDefinition);
 	}
+	
+	//https route
+	@Test
+	public void routeHttpsTest() throws Exception {
+		DeepRoute myRoute = new DeepRoute();
+		myRoute.setRouteid("TestRoute");//id不能为空
+//		myRoute.setCfrom("timer://report?fixedRate=true&delay=0&period=1000");
+//		myRoute.setCfrom("timer://report?fixedRate=true&delay=0");
+//		myRoute.setCfrom("timer://report?fixedRate=false");
+		myRoute.setCfrom("direct:start");
+//		Object sslContextParameters = appContext.getBean("sslContextParameters");
+//		myRoute.setCto("https://www.oschina.net/p/deepway");
+		myRoute.setCto("http://finance.sina.com.cn/realstock/company/sh600606/nc.shtml");
+		logger.info("++++++++++++++++++++++++++");
+		RouteDefinition routeDefinition = new RouteDefinition();
+		routeDefinition.from(myRoute.getCfrom());
+//		routeDefinition.process(myRoute.getProcessRef());
+		routeDefinition.setHeader("user-agent").simple("Mozilla/5.0",String.class);//这是关键
+		routeDefinition.to(myRoute.getCto());
+		routeDefinition.to("file://E:/Temp/outbox1/?fileName=${date:now:yyyy}/oschina_${date:now:yyyyMMddhhmmss}.html");//自动修改文件名
+		camelContext.addRouteDefinition(routeDefinition);
+		camelContext.start();//
+		logger.info("============================");
+		
+		
+//		RouteDefinition routeDefinition = new RouteDefinition();
+//		routeDefinition.from(myRoute.getCfrom());
+//		routeDefinition.to(myRoute.getCto());
+//		camelContext.addRoutes(routeDefinition);
+	}
+	
 	
 	@Test
 	public void saveRoute() throws Exception {
