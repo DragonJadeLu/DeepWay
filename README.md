@@ -8,7 +8,7 @@
 
 目前支持的协议：
 ftp，sftp，file，smb（共享目录）,webservice代理（webservice转发）
-
+加上webservice转发就更想一个企业数据总想了。
 2017年3月1日更新
 新增加Webservice转发的功能
 
