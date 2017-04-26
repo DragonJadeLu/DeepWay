@@ -1,12 +1,9 @@
 package com.deep.listener;
 
-import java.sql.SQLException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.camel.CamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,25 +20,11 @@ public class ServletContextLoaderListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		log.info("初始化Servlet环境。开始");
 		ServletContext servletContext = servletContextEvent.getServletContext();
-		
-//		CamelContext camelContext = (CamelContext)WebAppUtils.getBean("camelContext", servletContext);
-//		DataSource dataSource = (DataSource)WebAppUtils.getBean("dataSource", servletContext);
 		DeepRouteService routeService = (DeepRouteService)WebAppUtils.getBean("deepRouteService", servletContext);
 		try {
-//			String catalog = dataSource.getConnection().getCatalog();
-//			System.setProperty(WebAppUtils.DB_CATALOG, catalog);
-			
-//			List<Route>  routes = routeService.findRoutes();
-//			for (Route route : routes) {
-//				try {
-//					camelContext.addRoutes(route);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					log.info("Camel增加route错误!!!");
-//				}
-//			}
+			log.info("路由启动开始");
 			routeService.startRoute();
-			
+			log.info("路由启动完成");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

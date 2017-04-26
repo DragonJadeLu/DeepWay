@@ -1,12 +1,22 @@
 package com.deep.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.camel.CamelContext;
+import org.apache.camel.ServiceStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deep.model.DeepRoute;
 import com.deep.model.ProcessRecord;
@@ -26,7 +36,8 @@ public class RecordForm {
 	private DeepRouteService deepRouteService;
 	@Autowired  
 	private ProcessRecordService processRecordService;
-	
+
+
 	@RequestMapping(value = { "/list","/"}  )
 	public String list(Model model) {
 		List<ProcessRecord> records = processRecordService.findAll();
@@ -34,5 +45,4 @@ public class RecordForm {
 		return "/record/list";
 	}
 	
-
 }

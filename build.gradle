@@ -92,6 +92,8 @@ dependencies {
 	compile("org.apache.camel:camel-ftp:2.18.1")
 	compile("org.apache.camel:camel-beanio:2.18.1")
 	compile("org.apache.camel:camel-jaxb:2.18.1")
+	compile("org.apache.camel:camel-cxf:2.18.1")
+	compile("org.apache.camel:camel-jetty:2.18.1")
 	
 	compile("org.apache-extras.camel-extra:camel-jcifs:2.14.1"){
 		exclude group: 'javax.servlet', module: 'servlet-api'

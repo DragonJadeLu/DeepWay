@@ -2,7 +2,9 @@ package com.deep.model;
 
 
 
+import org.apache.camel.ServiceStatus;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,9 @@ public class DeepRoute
 	private String ctoname;
 
 	private Boolean disable = false;
+	
+	@Transient
+	private ServiceStatus serviceStatus;
 	
 	public DeepRoute() {
 		super();
@@ -146,6 +151,14 @@ public class DeepRoute
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public ServiceStatus getServiceStatus() {
+		return serviceStatus;
+	}
+
+	public void setServiceStatus(ServiceStatus serviceStatus) {
+		this.serviceStatus = serviceStatus;
 	}
 
 //

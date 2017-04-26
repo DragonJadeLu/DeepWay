@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.camel.CamelContext;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
+import org.apache.camel.builder.ExpressionClause;
+import org.apache.camel.model.ChoiceDefinition;
 import org.apache.camel.model.RouteDefinition;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,8 @@ public class DeepRouteService  {
 	}
 
 	public List<DeepRoute> findAll() {
-		List<DeepRoute> routes = mongoTemplate.findAll(DeepRoute.class);
+		Query query = new Query(Criteria.where("disable").is(false));
+		List<DeepRoute> routes = mongoTemplate.find(query,DeepRoute.class);
 		return routes;
 	}
 	public DeepRoute findById(String routeid) {
@@ -56,12 +59,14 @@ public class DeepRouteService  {
 	public void startRoute() throws Exception{
 		 List<DeepRoute> routes = findAll();
 		 for (DeepRoute deepRoute : routes) {
-			 assRouteDefinition(deepRoute);
+			 addRouteDefinition(deepRoute);
 		}
 		camelContext.start();
 	}
-	
-	private void assRouteDefinition(DeepRoute route) throws Exception{
+	/*
+	 * 增加一个deeproute并且启动它
+	 */
+	public void addRouteDefinition(DeepRoute route) throws Exception{
 		String cfrom = route.getCfrom();
 		String cto = route.getCto();
 		String routeid = route.getRouteid();
@@ -72,6 +77,8 @@ public class DeepRouteService  {
 		RouteDefinition routeDefinition = new RouteDefinition();
 		routeDefinition.routeId(routeid);
 		routeDefinition.from(cfrom).log(LoggingLevel.INFO, "开始====从路由:" + routeid + ":" + cfrom);
+//		ChoiceDefinition choice = routeDefinition.choice();
+//		ExpressionClause<ChoiceDefinition> cdeifin = choice.when();
 //		// if( StringUtils.isNotEmpty(errorpath)){//如果有错误路径就发到错误路径上
 //		// routeDefinition.errorHandler(deadLetterChannel(errorpath)).log(LoggingLevel.ERROR,
 //		// "路由:"+routeid+"发送失败时备份到出错路径:"+errorpath);
@@ -101,7 +108,6 @@ public class DeepRouteService  {
 		}
 		
 		routeDefinition.process(processor);
-		
 		if (StringUtils.isNotEmpty(backpath)) {//发送成功后在记录数据
 			routeDefinition.to(backpath).log(LoggingLevel.INFO, "备份路由:" + routeid + ":" + backpath);
 		}
@@ -116,7 +122,6 @@ public class DeepRouteService  {
 //
 //		// routeDefinition.end();//结束
 		camelContext.addRouteDefinition(routeDefinition);
-		
 	}
 
 

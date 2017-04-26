@@ -3,5 +3,5 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 0.1
         </div>
-        <strong>Copyright &copy; 2000-2017 <a href="//138.xjee.cn/dc/" target="_blank">Deep Studio</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2000-2017 <a href="//www.suaee.com" target="_blank">UAE Studio</a>.</strong> All rights reserved.
       </footer>

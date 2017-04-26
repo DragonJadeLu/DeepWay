@@ -1,7 +1,7 @@
 <%@ page language="java"   contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <head>
   <meta charset="UTF-8">
-  <title>简单系统集成DeepWay</title>
+  <title>SUAEE ESB</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

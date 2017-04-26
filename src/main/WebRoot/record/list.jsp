@@ -22,6 +22,7 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
+                      <th>MSG</th>
                       <th>文件名</th>
                       <th>处理时间</th>
                       <th>From</th>
@@ -29,11 +30,17 @@
                     </tr>
                     <c:forEach items="${records}" var="record">
                     <tr id="tr_${record.processrecordid }">
+                      <td>${record.msg }</td>
                       <td>${record.filenameonly }</td>
                       <td>${record.processtime }</td>
                       <td>${record.deepRoute.cfrom }</td>
                       <td>${record.deepRoute.cto }</td>
-                      <td><a href="<c:url value="/record/download/${record.processrecordid }"/>">下载</a></td>
+                      <td>
+                      <c:if test="${record.filenameonly != null }">
+                      <a href="<c:url value="/record/download/${record.processrecordid }"/>">下载</a>
+                      </c:if>
+                      
+                      </td>
                     </tr>
                     </c:forEach>
                   </table>
